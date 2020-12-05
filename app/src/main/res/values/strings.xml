@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MyProject</string>
+
+    <string name="et_search_bar">Bạn muốn tìm gì</string>
+<!--NavigationBar-->
+    <string name="function_home">Trang chủ</string>
+    <string name="function_Category">Danh mục</string>
+    <string name="function_new">Bản tin</string>
+    <string name="function_Notification">Thông báo</string>
+    <string name="function_user">Tài khoản</string>
+<!--HomeFragment-->
+    <string name="sale_in_day">Sale sốc trong ngày.</string>
+    <string name="item_your_like">Có thể bạn sẽ thích.</string>
+<!--CategoryFragment-->
+    <string name="show_all">TẤT CẢ</string>
+    <string name="category_tile">DANH MỤC</string>
+    <string name="toy_and_mom">Đồ chơi-Mẹ và bé</string>
+    <string name="phone_and_tablet">Điện thoại-Máy tính bảng</string>
+    <string name="cosmetic">Mỹ phẩm-Sức Khỏe</string>
+    <string name="electric_appliances">Điện gia dụng</string>
+    <string name="women_fashion">Thời trang nữ</string>
+    <string name="men_fashion">Thời trang nam</string>
+    <string name="jewelry">Trang sức-Phụ kiện</string>
+    <string name="laptop_pc">Laptop-PC-Phụ kiện</string>
+    <string name="car_moto">Ô tô-Xe máy</string>
+
+
+</resources>
