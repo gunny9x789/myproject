@@ -11,6 +11,7 @@
     <color name="tile">#FFFFFFFF</color>
 
     <color name="background">#f2f3f6</color>
+    <color name="backgroud_tv_sale_percen_in_sale_day">#F60303</color>
     <color name="background_bar">#1ba9ff</color>
     <color name="bt_log_or_reg">#1ba9ff</color>
     <color name="All_category">#0040FF</color>

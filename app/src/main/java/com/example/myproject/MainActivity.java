@@ -2,14 +2,10 @@ package com.example.myproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,18 +14,16 @@ import android.widget.Toast;
 import com.example.myproject.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import AllListForder.AllItemSellList;
+import AllListForder.ItemSaleInDay;
+import AllListForder.Object.ItemSell;
+import View.CategoryFragment.CategoryFragment;
+import View.HomeFragment.HomeFragment;
+import View.NewsFeedFragment.NewsFeedFragment;
+import View.NotificationFragment.NotificationFragment;
+import View.UserFragment.UserFragment;
 
-import AllListForder.MainCategoryList;
-import FunctionFragment.CategoryFragment.CategoryFragment;
-import FunctionFragment.HomeFragment.HomeFragment;
-import FunctionFragment.NewsFeedFragment.NewsFeedFragment;
-import FunctionFragment.NotificationFragment.NotificationFragment;
-import FunctionFragment.UserFragment.UserFragment;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemSaleInDay, AllItemSellList {
     ActivityMainBinding mainBinding;
 
 
@@ -39,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         getFragment(HomeFragment.newInstance());
         Intent getIntend = getIntent();
-        String json = getIntend.getStringExtra("Json");
         Boolean checkInternet = getIntend.getBooleanExtra("CheckInternet",true);
         if (checkInternet == false){
             Toast.makeText(this,"Kiem tra lai ket noi", Toast.LENGTH_LONG).show();
@@ -50,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.function_home: {
                         mainBinding.mainSearchBar.setVisibility(View.VISIBLE);
-                        Toast.makeText(getBaseContext(),json,Toast.LENGTH_SHORT).show();
                         getFragment(HomeFragment.newInstance());
                         break;
                     }

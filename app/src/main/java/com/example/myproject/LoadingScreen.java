@@ -9,21 +9,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import AllListForder.MainAdsList;
 import AllListForder.MainCategoryList;
 import AllListForder.Object.MainCategory;
-import FunctionFragment.HomeFragment.HomeFragment;
+import support_functions.Classify_item_list;
+import support_functions.GetJson;
 
 public class LoadingScreen extends AppCompatActivity implements MainCategoryList {
     private int Request_Permission_Code = 10;
-    private String URL_LINK_MAIN_CATEGORY = "https://demo6258945.mockable.io/DemoMainAds";
+    private String URL_LINK_ADS_HOME = "https://demo8357538.mockable.io/DemoHomeAds";
+    private String URL_LINK_HOME_EVENT = "https://demo8357538.mockable.io/demoHomeEvent";
+    private String URL_LINK_ALL_ITEM_SELL = "https://demo8357538.mockable.io/DemoSanPham";
 
 
     @Override
@@ -38,28 +39,38 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
     }
 
     class GetData extends AsyncTask<Void, Integer, Integer> {
-        String mainAdsCategoryJSON = "";
+        String AdsInHomeJSON = "";
+        String EventInHomeJson = "";
+        String TotalItemJson = "";
         Intent intent;
-        Intent intent1;
+        Bundle bundle;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             intent = new Intent(getBaseContext(), MainActivity.class);
-            intent1 = new Intent(getBaseContext(), HomeFragment.class);
+            bundle = new Bundle();
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
             try {
-                URL url = new URL(URL_LINK_MAIN_CATEGORY);
-                URLConnection urlConnection = url.openConnection();
-                InputStream inputStream = urlConnection.getInputStream();
-                int count = 0;
-                int byteCharacter;
-                while ((byteCharacter = inputStream.read()) != -1) {
-                    mainAdsCategoryJSON += (char) byteCharacter;
-                }
+                URL urlAdsHome = new URL(URL_LINK_ADS_HOME);
+                URLConnection urlConnectionAdsHome = urlAdsHome.openConnection();
+                InputStream inputStreamAdsHome = urlConnectionAdsHome.getInputStream();
+
+                URL urlEventHome = new URL(URL_LINK_HOME_EVENT);
+                URLConnection urlConnectionEventHome = urlEventHome.openConnection();
+                InputStream inputStreamEventHome = urlConnectionEventHome.getInputStream();
+
+                URL urlTotalItemSell = new URL(URL_LINK_ALL_ITEM_SELL);
+                URLConnection urlConnectionTotalItemSell = urlTotalItemSell.openConnection();
+                InputStream inputStreamTotalItemSell = urlConnectionTotalItemSell.getInputStream();
+
+                AdsInHomeJSON = readUrl(inputStreamAdsHome, AdsInHomeJSON);
+                EventInHomeJson = readUrl(inputStreamEventHome, EventInHomeJson);
+                TotalItemJson = readUrl(inputStreamTotalItemSell,TotalItemJson);
+
                 intent.putExtra("CheckInternet", true);
             } catch (Exception e) {
                 intent.putExtra("CheckInternet", false);
@@ -82,8 +93,12 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
-            intent.putExtra("Json", mainAdsCategoryJSON);
-            intent1.putExtra("Json", mainAdsCategoryJSON);
+            //intent.putExtra("JsonAdsInHome", AdsInHomeJSON);
+            GetJson.getADSJson(AdsInHomeJSON);
+            GetJson.getEventHomeJson(EventInHomeJson);
+            GetJson.getTotalItemJson(TotalItemJson);
+
+            Classify_item_list.getItemSaleInDay();
             startActivity(intent);
             finish();
         }
@@ -97,5 +112,17 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public String readUrl(InputStream inputStream, String json) {
+        try {
+            int byteCharacter;
+            while ((byteCharacter = inputStream.read()) != -1) {
+                json += (char) byteCharacter;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }
