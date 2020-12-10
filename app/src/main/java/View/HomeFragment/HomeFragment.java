@@ -1,42 +1,49 @@
 package View.HomeFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myproject.R;
 import com.example.myproject.databinding.HomeFragmentBinding;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import AllListForder.Event_In_Home_List;
-import AllListForder.ItemSaleInDay;
-import AllListForder.MainAdsList;
+import AllListForder.AllListUseFromHome;
+import AllListForder.Object.ItemSell;
+import View.HomeFragment.Adapter.AdaperRCVItemShowInHome;
 import View.HomeFragment.Adapter.AdapteMainADS;
 import View.HomeFragment.Adapter.AdapterEventHome;
 import View.HomeFragment.Adapter.AdapterRCVItemSaleInDay;
+import View.HomeFragment.Adapter.AdapterRCVItemYourMayLike;
+import View.HomeFragment.Adapter.OnItemRCVClickListener;
 
 
-public class HomeFragment extends Fragment implements MainAdsList, Event_In_Home_List , ItemSaleInDay {
+public class HomeFragment extends Fragment implements AllListUseFromHome, OnItemRCVClickListener {
 
     HomeFragmentBinding homeFragmentBinding;
-    private Intent intent;
     private AdapteMainADS adapteMainADS;
     private AdapterEventHome adapterEventHome;
     private AdapterRCVItemSaleInDay adapterRCVItemSaleInDay;
+    private AdapterRCVItemYourMayLike adapterRCVItemYourMayLike;
+    private AdaperRCVItemShowInHome adaperRCVItemShowInHome;
     private Timer timer;
+
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -50,7 +57,7 @@ public class HomeFragment extends Fragment implements MainAdsList, Event_In_Home
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
 
-        adapteMainADS = new AdapteMainADS(MAIN_ADS_IMG_LIST,getActivity().getBaseContext());
+        adapteMainADS = new AdapteMainADS(MAIN_ADS_IMG_LIST, getActivity().getBaseContext());
         homeFragmentBinding.VpMainAdsHomeFragment.setAdapter(adapteMainADS);
         homeFragmentBinding.CIMainAdsHomeFragment.setViewPager(
                 homeFragmentBinding.VpMainAdsHomeFragment
@@ -58,23 +65,60 @@ public class HomeFragment extends Fragment implements MainAdsList, Event_In_Home
         adapteMainADS.registerDataSetObserver(homeFragmentBinding.CIMainAdsHomeFragment.getDataSetObserver());
         autoSide();
 
-        adapterEventHome = new AdapterEventHome(EVENT_IN_HOME_LIST,getActivity().getBaseContext());
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.VERTICAL,false);
+        adapterEventHome = new AdapterEventHome(EVENT_IN_HOME_LIST, getActivity().getBaseContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext(), RecyclerView.VERTICAL, false);
         homeFragmentBinding.rcvHomeEventShow.setAdapter(adapterEventHome);
         homeFragmentBinding.rcvHomeEventShow.setLayoutManager(layoutManager);
 
-        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay(ITEM_SALE_IN_DAY_LIST,getActivity().getBaseContext());
-        RecyclerView.LayoutManager layoutManager1 =new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false);
+//        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay(ITEM_SALE_IN_DAY_LIST, getActivity().getBaseContext());
+        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay(this);
+        adapterRCVItemSaleInDay.setData(getList(ITEM_SALE_IN_DAY_LIST));
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity().getBaseContext(), RecyclerView.HORIZONTAL, false);
         homeFragmentBinding.rcvItemSaleInDay.setLayoutManager(layoutManager1);
         homeFragmentBinding.rcvItemSaleInDay.setAdapter(adapterRCVItemSaleInDay);
 
+
+        adapterRCVItemYourMayLike = new AdapterRCVItemYourMayLike();
+        adapterRCVItemYourMayLike.setData(getList(ITEM_YOUR_MAY_LIKE_LIST));
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false);
+        homeFragmentBinding.rcvItemYouMayLike.setLayoutManager(layoutManager2);
+        homeFragmentBinding.rcvItemYouMayLike.setAdapter(adapterRCVItemYourMayLike);
+
+        adaperRCVItemShowInHome = new AdaperRCVItemShowInHome();
+        adaperRCVItemShowInHome.setData(getList(ITEM_HOT_DEAL));
+        RecyclerView.LayoutManager layoutManager3 = new GridLayoutManager(getActivity().getBaseContext(),3,RecyclerView.VERTICAL,false);
+        homeFragmentBinding.rcvShowListSpItemInHome.setLayoutManager(layoutManager3);
+        homeFragmentBinding.rcvShowListSpItemInHome.setAdapter(adaperRCVItemShowInHome);
+
+        homeFragmentBinding.tvHotDealInHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adaperRCVItemShowInHome.setData(getList(ITEM_HOT_DEAL));
+                homeFragmentBinding.rcvShowListSpItemInHome.setAdapter(adaperRCVItemShowInHome);
+            }
+        });
+        homeFragmentBinding.tvBestPriceInHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adaperRCVItemShowInHome.setData(getList(ITEM_BEST_PRICE));
+                homeFragmentBinding.rcvShowListSpItemInHome.setAdapter(adaperRCVItemShowInHome);
+            }
+        });
+        homeFragmentBinding.tvNewItemInHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adaperRCVItemShowInHome.setData(getList(ITEM_NEW));
+                homeFragmentBinding.rcvShowListSpItemInHome.setAdapter(adaperRCVItemShowInHome);
+            }
+        });
         return homeFragmentBinding.getRoot();
     }
+
     private void autoSide() {
-        if (MAIN_ADS_IMG_LIST == null || MAIN_ADS_IMG_LIST.isEmpty() || homeFragmentBinding.VpMainAdsHomeFragment == null){
+        if (MAIN_ADS_IMG_LIST == null || MAIN_ADS_IMG_LIST.isEmpty() || homeFragmentBinding.VpMainAdsHomeFragment == null) {
             return;
         }
-        if (timer == null){
+        if (timer == null) {
             timer = new Timer();
         }
         timer.schedule(new TimerTask() {
@@ -84,25 +128,39 @@ public class HomeFragment extends Fragment implements MainAdsList, Event_In_Home
                     @Override
                     public void run() {
                         int currentItem = homeFragmentBinding.VpMainAdsHomeFragment.getCurrentItem();
-                        int total = MAIN_ADS_IMG_LIST.size()-1;
-                        if (currentItem<total){
+                        int total = MAIN_ADS_IMG_LIST.size() - 1;
+                        if (currentItem < total) {
                             currentItem++;
                             homeFragmentBinding.VpMainAdsHomeFragment.setCurrentItem(currentItem);
-                        }else {
+                        } else {
                             homeFragmentBinding.VpMainAdsHomeFragment.setCurrentItem(0);
                         }
                     }
                 });
             }
-        },500,3000);
+        }, 500, 5000);
+    }
+
+    private List<ItemSell> getList(List<ItemSell> itemSells) {
+        List<ItemSell> itemSellList = new ArrayList<>();
+        for (int i = 0; i<itemSells.size();i++){
+            itemSellList.add(itemSells.get(i));
+        }
+        return itemSellList;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (timer!= null){
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        ItemSell itemSell = ITEM_SALE_IN_DAY_LIST.get(position);
+        Toast.makeText(getActivity().getBaseContext(),itemSell.getItemName(),Toast.LENGTH_LONG).show();
     }
 }

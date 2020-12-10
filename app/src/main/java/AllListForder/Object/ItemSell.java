@@ -1,18 +1,18 @@
 package AllListForder.Object;
 
 public class ItemSell {
-    private int idItem, priceDontSale, priceSale, salePercent, totalItem, sold, idUserSell;
-    private String codeidMainCategory, codeIdSideCategory, itemName, avatarItem, characteristics, codeEventID,sale;
+    private int idItem, priceDontSale, priceSale, salePercent, totalItem,totalSold, itemSoldInMonth, idUserSell;
+    private String codeidMainCategory, codeIdSideCategory, itemName, avatarItem, characteristics, codeEventID,sale,dateSell;
 
     public ItemSell(int idItem, String codeidMainCategory, String codeIdSideCategory, String itemName, int idUserSell,
                     String avatarItem, String sale, int salePercent,
-                    int priceDontSale, int priceSale, int totalItem, int sold,
-                    String characteristics, String codeEventID) {
+                    int priceDontSale, int priceSale, int totalItem, int totalSold,
+                    int itemSoldInMonth, String characteristics, String codeEventID,String dateSell) {
         this.idItem = idItem;
         this.priceDontSale = priceDontSale;
         this.priceSale = priceSale;
         this.salePercent = salePercent;
-        this.sold = sold;
+        this.itemSoldInMonth = itemSoldInMonth;
         this.codeidMainCategory = codeidMainCategory;
         this.codeIdSideCategory = codeIdSideCategory;
         this.sale = sale;
@@ -22,6 +22,23 @@ public class ItemSell {
         this.characteristics = characteristics;
         this.codeEventID = codeEventID;
         this.totalItem = totalItem;
+        this.totalSold = totalSold;
+    }
+
+    public int getTotalSold() {
+        return totalSold;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
+    }
+
+    public String getDateSell() {
+        return dateSell;
+    }
+
+    public void setDateSell(String dateSell) {
+        this.dateSell = dateSell;
     }
 
     public int getIdItem() {
@@ -64,12 +81,12 @@ public class ItemSell {
         this.totalItem = totalItem;
     }
 
-    public int getSold() {
-        return sold;
+    public int getItemSoldInMonth() {
+        return itemSoldInMonth;
     }
 
-    public void setSold(int sold) {
-        this.sold = sold;
+    public void setItemSoldInMonth(int itemSoldInMonth) {
+        this.itemSoldInMonth = itemSoldInMonth;
     }
 
     public int getIdUserSell() {

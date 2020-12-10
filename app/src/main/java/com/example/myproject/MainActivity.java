@@ -1,21 +1,21 @@
 package com.example.myproject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import com.example.myproject.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import AllListForder.AllItemSellList;
-import AllListForder.ItemSaleInDay;
+import AllListForder.AllListUseFromHome;
 import AllListForder.Object.ItemSell;
 import View.CategoryFragment.CategoryFragment;
 import View.HomeFragment.HomeFragment;
@@ -23,7 +23,7 @@ import View.NewsFeedFragment.NewsFeedFragment;
 import View.NotificationFragment.NotificationFragment;
 import View.UserFragment.UserFragment;
 
-public class MainActivity extends AppCompatActivity implements ItemSaleInDay, AllItemSellList {
+public class MainActivity extends AppCompatActivity implements AllItemSellList{
     ActivityMainBinding mainBinding;
 
 
@@ -31,11 +31,12 @@ public class MainActivity extends AppCompatActivity implements ItemSaleInDay, Al
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ItemSell itemSell= ALL_ITEM_SELL_LIST.get(27);
         getFragment(HomeFragment.newInstance());
         Intent getIntend = getIntent();
-        Boolean checkInternet = getIntend.getBooleanExtra("CheckInternet",true);
-        if (checkInternet == false){
-            Toast.makeText(this,"Kiem tra lai ket noi", Toast.LENGTH_LONG).show();
+        Boolean checkInternet = getIntend.getBooleanExtra("CheckInternet", true);
+        if (checkInternet == false) {
+            Toast.makeText(this, "Kiem tra lai ket noi", Toast.LENGTH_LONG).show();
         }
         mainBinding.mainFunctionBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

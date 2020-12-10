@@ -1,10 +1,12 @@
 package com.example.myproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -17,6 +19,7 @@ import java.net.URLConnection;
 
 import AllListForder.MainCategoryList;
 import AllListForder.Object.MainCategory;
+import support_functions.CheckInternet;
 import support_functions.Classify_item_list;
 import support_functions.GetJson;
 
@@ -31,11 +34,35 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
-
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.INTERNET}, Request_Permission_Code);
+        loadData();
+    }
 
-        new GetData().execute();
+    private void loadData() {
+        if (CheckInternet.checkInterNet(this)) {
+            //network enabled
+            new GetData().execute();
+        } else {
+            //network disable
+            AlertDialog checkInternetAnalog = new AlertDialog.Builder(getBaseContext())
+                    .setTitle("Thông báo")
+                    .setMessage(getString(R.string.notifyCheckInternet))
+                    .setPositiveButton(getString(R.string.returnConnect), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            loadData();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.cancelNotify), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            System.exit(0);
+                        }
+                    }).create();
+            checkInternetAnalog.show();
+        }
     }
 
     class GetData extends AsyncTask<Void, Integer, Integer> {
@@ -69,7 +96,7 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
 
                 AdsInHomeJSON = readUrl(inputStreamAdsHome, AdsInHomeJSON);
                 EventInHomeJson = readUrl(inputStreamEventHome, EventInHomeJson);
-                TotalItemJson = readUrl(inputStreamTotalItemSell,TotalItemJson);
+                TotalItemJson = readUrl(inputStreamTotalItemSell, TotalItemJson);
 
                 intent.putExtra("CheckInternet", true);
             } catch (Exception e) {
@@ -98,7 +125,7 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
             GetJson.getEventHomeJson(EventInHomeJson);
             GetJson.getTotalItemJson(TotalItemJson);
 
-            Classify_item_list.getItemSaleInDay();
+            Classify_item_list.Classify_list();
             startActivity(intent);
             finish();
         }

@@ -1,17 +1,15 @@
 package support_functions;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import AllListForder.AllItemSellList;
-import AllListForder.Event_In_Home_List;
-import AllListForder.MainAdsList;
+import AllListForder.AllListUseFromHome;
 import AllListForder.Object.EventInHome;
 import AllListForder.Object.ItemSell;
 import AllListForder.Object.MainAdsImg;
 
-public class GetJson implements MainAdsList, Event_In_Home_List, AllItemSellList {
+public class GetJson implements AllListUseFromHome, AllItemSellList {
     public static void getADSJson(String json) {
         try {
             JSONArray jsonArray = new JSONArray(json);
@@ -63,12 +61,14 @@ public class GetJson implements MainAdsList, Event_In_Home_List, AllItemSellList
                 int priceDontSale = jsonObject.getInt("priceDontSale");
                 int priceSale = jsonObject.getInt("priceSale");
                 int totalItem = jsonObject.getInt("totalItem");
-                int itemSold = jsonObject.getInt("itemSold");
+                int totalItemSold = jsonObject.getInt("totalItemSold");
+                int itemSoldInMonth = jsonObject.getInt("itemSoldInMonth");
                 int idUserSell = jsonObject.getInt("idUserSell");
                 String characteristics = jsonObject.getString("characteristics");
                 String EventCode = jsonObject.getString("EventCode");
+                String daySell = jsonObject.getString("DaySell");
                 ALL_ITEM_SELL_LIST.add(new ItemSell(idItemSell, CodeMainCateId, CodeSideCateId, nameItemSell, idUserSell, avatarItemSell,
-                        sale, salePercent, priceDontSale, priceSale, totalItem, itemSold, characteristics, EventCode));
+                        sale, salePercent, priceDontSale, priceSale, totalItem, totalItemSold,itemSoldInMonth, characteristics, EventCode,daySell));
 
             }
         } catch (Exception e) {
