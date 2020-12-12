@@ -1,4 +1,4 @@
-package View.CategoryFragment.Adapter;
+package View.categoryFragment.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

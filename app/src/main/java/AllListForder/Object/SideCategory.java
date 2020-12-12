@@ -1,23 +1,23 @@
 package AllListForder.Object;
 
 public class SideCategory {
-    private int idMainCategory, idSideCategory;
-    private String codeId, sideCategoryName, sideCategoryAvatar;
+    private int  idSideCategory;
+    private String codeId, sideCategoryName,codeMainCategory,sideCategoryAvatar;
 
-    public SideCategory(int idMainCategory, int idSideCategory, String codeId, String sideCategoryName, String sideCategoryAvatar) {
-        this.idMainCategory = idMainCategory;
+    public SideCategory(String codeMainCategory, int idSideCategory, String codeId, String sideCategoryName, String sideCategoryAvatar) {
+        this.codeMainCategory = codeMainCategory;
         this.idSideCategory = idSideCategory;
         this.codeId = codeId;
         this.sideCategoryName = sideCategoryName;
         this.sideCategoryAvatar = sideCategoryAvatar;
     }
 
-    public int getIdMainCategory() {
-        return idMainCategory;
+    public String getIdMainCategory() {
+        return codeMainCategory;
     }
 
-    public void setIdMainCategory(int idMainCategory) {
-        this.idMainCategory = idMainCategory;
+    public void setIdMainCategory(String codeMainCategory) {
+        this.codeMainCategory = codeMainCategory;
     }
 
     public int getIdSideCategory() {

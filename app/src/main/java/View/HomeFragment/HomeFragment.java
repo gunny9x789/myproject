@@ -1,5 +1,6 @@
-package View.HomeFragment;
+package View.homeFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myproject.MainActivity;
 import com.example.myproject.R;
 import com.example.myproject.databinding.HomeFragmentBinding;
 
@@ -24,17 +26,19 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AllListForder.AllItemSellList;
 import AllListForder.AllListUseFromHome;
 import AllListForder.Object.ItemSell;
-import View.HomeFragment.Adapter.AdaperRCVItemShowInHome;
-import View.HomeFragment.Adapter.AdapteMainADS;
-import View.HomeFragment.Adapter.AdapterEventHome;
-import View.HomeFragment.Adapter.AdapterRCVItemSaleInDay;
-import View.HomeFragment.Adapter.AdapterRCVItemYourMayLike;
-import View.HomeFragment.Adapter.OnItemRCVClickListener;
+import View.homeFragment.adapter.AdaperRCVItemShowInHome;
+import View.homeFragment.adapter.AdapteMainADS;
+import View.homeFragment.adapter.AdapterEventHome;
+import View.homeFragment.adapter.AdapterRCVItemSaleInDay;
+import View.homeFragment.adapter.AdapterRCVItemYourMayLike;
+import View.homeFragment.adapter.OnItemRCVClickListener;
+import View.showItemFragment.ShowItemDetailFragment;
 
 
-public class HomeFragment extends Fragment implements AllListUseFromHome, OnItemRCVClickListener {
+public class HomeFragment extends Fragment implements AllListUseFromHome, AllItemSellList {
 
     HomeFragmentBinding homeFragmentBinding;
     private AdapteMainADS adapteMainADS;
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment implements AllListUseFromHome, OnItem
     private AdapterRCVItemYourMayLike adapterRCVItemYourMayLike;
     private AdaperRCVItemShowInHome adaperRCVItemShowInHome;
     private Timer timer;
+    private MainActivity mainActivity;
 
 
     public static HomeFragment newInstance() {
@@ -56,6 +61,7 @@ public class HomeFragment extends Fragment implements AllListUseFromHome, OnItem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         homeFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
+        mainActivity = (MainActivity) getActivity();
 
         adapteMainADS = new AdapteMainADS(MAIN_ADS_IMG_LIST, getActivity().getBaseContext());
         homeFragmentBinding.VpMainAdsHomeFragment.setAdapter(adapteMainADS);
@@ -70,25 +76,44 @@ public class HomeFragment extends Fragment implements AllListUseFromHome, OnItem
         homeFragmentBinding.rcvHomeEventShow.setAdapter(adapterEventHome);
         homeFragmentBinding.rcvHomeEventShow.setLayoutManager(layoutManager);
 
-//        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay(ITEM_SALE_IN_DAY_LIST, getActivity().getBaseContext());
-        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay(this);
+        adapterRCVItemSaleInDay = new AdapterRCVItemSaleInDay();
         adapterRCVItemSaleInDay.setData(getList(ITEM_SALE_IN_DAY_LIST));
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity().getBaseContext(), RecyclerView.HORIZONTAL, false);
         homeFragmentBinding.rcvItemSaleInDay.setLayoutManager(layoutManager1);
         homeFragmentBinding.rcvItemSaleInDay.setAdapter(adapterRCVItemSaleInDay);
-
+        adapterRCVItemSaleInDay.setItemClickListener(new OnItemRCVClickListener() {
+            @Override
+            public void onItemClick(ItemSell itemSell) {
+                mainActivity.setItemSell(itemSell);
+                mainActivity.getFragment(ShowItemDetailFragment.newInstance());
+            }
+        });
 
         adapterRCVItemYourMayLike = new AdapterRCVItemYourMayLike();
         adapterRCVItemYourMayLike.setData(getList(ITEM_YOUR_MAY_LIKE_LIST));
-        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity().getBaseContext(),RecyclerView.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity().getBaseContext(), RecyclerView.HORIZONTAL, false);
         homeFragmentBinding.rcvItemYouMayLike.setLayoutManager(layoutManager2);
         homeFragmentBinding.rcvItemYouMayLike.setAdapter(adapterRCVItemYourMayLike);
+        adapterRCVItemYourMayLike.setItemClickListener(new OnItemRCVClickListener() {
+            @Override
+            public void onItemClick(ItemSell itemSell) {
+                mainActivity.setItemSell(itemSell);
+                mainActivity.getFragment(ShowItemDetailFragment.newInstance());
+            }
+        });
 
         adaperRCVItemShowInHome = new AdaperRCVItemShowInHome();
         adaperRCVItemShowInHome.setData(getList(ITEM_HOT_DEAL));
-        RecyclerView.LayoutManager layoutManager3 = new GridLayoutManager(getActivity().getBaseContext(),3,RecyclerView.VERTICAL,false);
+        RecyclerView.LayoutManager layoutManager3 = new GridLayoutManager(getActivity().getBaseContext(), 3, RecyclerView.VERTICAL, false);
         homeFragmentBinding.rcvShowListSpItemInHome.setLayoutManager(layoutManager3);
         homeFragmentBinding.rcvShowListSpItemInHome.setAdapter(adaperRCVItemShowInHome);
+        adaperRCVItemShowInHome.setItemClickListener(new OnItemRCVClickListener() {
+            @Override
+            public void onItemClick(ItemSell itemSell) {
+                mainActivity.setItemSell(itemSell);
+                mainActivity.getFragment(ShowItemDetailFragment.newInstance());
+            }
+        });
 
         homeFragmentBinding.tvHotDealInHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +168,7 @@ public class HomeFragment extends Fragment implements AllListUseFromHome, OnItem
 
     private List<ItemSell> getList(List<ItemSell> itemSells) {
         List<ItemSell> itemSellList = new ArrayList<>();
-        for (int i = 0; i<itemSells.size();i++){
+        for (int i = 0; i < itemSells.size(); i++) {
             itemSellList.add(itemSells.get(i));
         }
         return itemSellList;
@@ -156,11 +181,5 @@ public class HomeFragment extends Fragment implements AllListUseFromHome, OnItem
             timer.cancel();
             timer = null;
         }
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        ItemSell itemSell = ITEM_SALE_IN_DAY_LIST.get(position);
-        Toast.makeText(getActivity().getBaseContext(),itemSell.getItemName(),Toast.LENGTH_LONG).show();
     }
 }

@@ -1,22 +1,22 @@
 package AllListForder.Object;
 
 public class MainAdsImg {
-    private int id;
+    private int idADSInHome;
     private String  codeMainAdsId, local, urlIMG;
 
-    public MainAdsImg(int id, String codeMainAdsId, String local, String urlIMG) {
-        this.id = id;
+    public MainAdsImg(int idADSInHome, String codeMainAdsId, String local, String urlIMG) {
+        this.idADSInHome = idADSInHome;
         this.codeMainAdsId = codeMainAdsId;
         this.local = local;
         this.urlIMG = urlIMG;
     }
 
     public int getId() {
-        return id;
+        return idADSInHome;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idADSInHome = id;
     }
 
     public String getCodeMainAdsId() {

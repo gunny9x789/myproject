@@ -1,4 +1,4 @@
-package View.UserFragment.LoginRegisterFragment.LoginFragment;
+package View.userFragment.LoginRegisterFragment.LoginFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.example.myproject.MainActivity;
 import com.example.myproject.R;
 import com.example.myproject.databinding.LoginFragmentBinding;
 
-import View.UserFragment.LoginRegisterFragment.RegisterFragment.RegisterFragment;
+import View.userFragment.LoginRegisterFragment.RegisterFragment.RegisterFragment;
 
 public class LoginFragment extends Fragment {
     LoginFragmentBinding loginFragmentBinding;

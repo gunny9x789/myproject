@@ -3,6 +3,9 @@ package support_functions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import AllListForder.AllItemSellList;
 import AllListForder.AllListUseFromHome;
 import AllListForder.Object.EventInHome;
@@ -15,11 +18,11 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int id = jsonObject.getInt("id");
+                int idADSInHome = jsonObject.getInt("idADSInHome");
                 String codeMainAdsId = jsonObject.getString("codeMainAdsId");
                 String local = jsonObject.getString("local");
                 String urlIMG = jsonObject.getString("urlIMG");
-                MAIN_ADS_IMG_LIST.add(new MainAdsImg(id, codeMainAdsId, local, urlIMG));
+                MAIN_ADS_IMG_LIST.add(new MainAdsImg(idADSInHome, codeMainAdsId, local, urlIMG));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,7 +34,7 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int id = jsonObject.getInt("id");
+                int id = jsonObject.getInt("idHomeEvent");
                 String codeEvent = jsonObject.getString("codeEvent");
                 String UrlMainEventImg = jsonObject.getString("UrlMainEventImg");
                 String UrlSideEventImg1 = jsonObject.getString("UrlSideEventImg1");
@@ -55,7 +58,13 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
                 String CodeMainCateId = jsonObject.getString("CodeMainCateId");
                 String CodeSideCateId = jsonObject.getString("CodeSideCateId");
                 String nameItemSell = jsonObject.getString("nameItemSell");
-                String avatarItemSell = jsonObject.getString("avatarItemSell");
+                List<String> avatarItemSellList = new ArrayList<>();
+                JSONArray avatarItemSell = jsonObject.getJSONArray("avatarItemSell");
+                for (int j = 0; j<avatarItemSell.length();j++){
+                    JSONObject jsonObject1 = avatarItemSell.getJSONObject(j);
+                    String UrlImg = jsonObject1.getString("UrlImg");
+                    avatarItemSellList.add(UrlImg);
+                }
                 String sale = jsonObject.getString("sale");
                 int salePercent = jsonObject.getInt("salePercent");
                 int priceDontSale = jsonObject.getInt("priceDontSale");
@@ -67,7 +76,7 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
                 String characteristics = jsonObject.getString("characteristics");
                 String EventCode = jsonObject.getString("EventCode");
                 String daySell = jsonObject.getString("DaySell");
-                ALL_ITEM_SELL_LIST.add(new ItemSell(idItemSell, CodeMainCateId, CodeSideCateId, nameItemSell, idUserSell, avatarItemSell,
+                ALL_ITEM_SELL_LIST.add(new ItemSell(idItemSell, CodeMainCateId, CodeSideCateId, nameItemSell, idUserSell, avatarItemSellList,
                         sale, salePercent, priceDontSale, priceSale, totalItem, totalItemSold,itemSoldInMonth, characteristics, EventCode,daySell));
 
             }

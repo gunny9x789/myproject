@@ -1,52 +1,50 @@
 package AllListForder.Object;
 
-public class ItemSell {
-    private int idItem, priceDontSale, priceSale, salePercent, totalItem,totalSold, itemSoldInMonth, idUserSell;
-    private String codeidMainCategory, codeIdSideCategory, itemName, avatarItem, characteristics, codeEventID,sale,dateSell;
+import java.io.Serializable;
+import java.util.List;
 
-    public ItemSell(int idItem, String codeidMainCategory, String codeIdSideCategory, String itemName, int idUserSell,
-                    String avatarItem, String sale, int salePercent,
-                    int priceDontSale, int priceSale, int totalItem, int totalSold,
-                    int itemSoldInMonth, String characteristics, String codeEventID,String dateSell) {
-        this.idItem = idItem;
+public class ItemSell implements Serializable {
+    private int idItemSell, priceDontSale, priceSale, salePercent, totalItem, totalItemSold, itemSoldInMonth, idUserSell;
+    private String CodeMainCateId, CodeSideCateId, nameItemSell, trademark,characteristics, EventCode, sale, DaySell;
+    private List<String> avatarItemSell;
+
+    public ItemSell(int idItemSell, String CodeMainCateId, String CodeSideCateId, String nameItemSell, int idUserSell,
+                    String trademark, List<String> avatarItemSell, String sale, int salePercent,
+                    int priceDontSale, int priceSale, int totalItem, int totalItemSold,
+                    int itemSoldInMonth, String characteristics, String EventCode, String DaySell) {
+        this.idItemSell = idItemSell;
         this.priceDontSale = priceDontSale;
         this.priceSale = priceSale;
         this.salePercent = salePercent;
         this.itemSoldInMonth = itemSoldInMonth;
-        this.codeidMainCategory = codeidMainCategory;
-        this.codeIdSideCategory = codeIdSideCategory;
+        this.CodeMainCateId = CodeMainCateId;
+        this.CodeSideCateId = CodeSideCateId;
         this.sale = sale;
-        this.itemName = itemName;
+        this.nameItemSell = nameItemSell;
         this.idUserSell = idUserSell;
-        this.avatarItem = avatarItem;
+        this.avatarItemSell = avatarItemSell;
         this.characteristics = characteristics;
-        this.codeEventID = codeEventID;
+        this.EventCode = EventCode;
         this.totalItem = totalItem;
-        this.totalSold = totalSold;
+        this.totalItemSold = totalItemSold;
+        this.DaySell = DaySell;
+        this.trademark = trademark;
     }
 
-    public int getTotalSold() {
-        return totalSold;
+    public String getTrademark() {
+        return trademark;
     }
 
-    public void setTotalSold(int totalSold) {
-        this.totalSold = totalSold;
+    public void setTrademark(String trademark) {
+        this.trademark = trademark;
     }
 
-    public String getDateSell() {
-        return dateSell;
+    public int getIdItemSell() {
+        return idItemSell;
     }
 
-    public void setDateSell(String dateSell) {
-        this.dateSell = dateSell;
-    }
-
-    public int getIdItem() {
-        return idItem;
-    }
-
-    public void setIdItem(int idItem) {
-        this.idItem = idItem;
+    public void setIdItemSell(int idItemSell) {
+        this.idItemSell = idItemSell;
     }
 
     public int getPriceDontSale() {
@@ -81,6 +79,14 @@ public class ItemSell {
         this.totalItem = totalItem;
     }
 
+    public int getTotalItemSold() {
+        return totalItemSold;
+    }
+
+    public void setTotalItemSold(int totalItemSold) {
+        this.totalItemSold = totalItemSold;
+    }
+
     public int getItemSoldInMonth() {
         return itemSoldInMonth;
     }
@@ -97,36 +103,36 @@ public class ItemSell {
         this.idUserSell = idUserSell;
     }
 
-    public String getCodeidMainCategory() {
-        return codeidMainCategory;
+    public String getCodeMainCateId() {
+        return CodeMainCateId;
     }
 
-    public void setCodeidMainCategory(String codeidMainCategory) {
-        this.codeidMainCategory = codeidMainCategory;
+    public void setCodeMainCateId(String codeMainCateId) {
+        CodeMainCateId = codeMainCateId;
     }
 
-    public String getCodeIdSideCategory() {
-        return codeIdSideCategory;
+    public String getCodeSideCateId() {
+        return CodeSideCateId;
     }
 
-    public void setCodeIdSideCategory(String codeIdSideCategory) {
-        this.codeIdSideCategory = codeIdSideCategory;
+    public void setCodeSideCateId(String codeSideCateId) {
+        CodeSideCateId = codeSideCateId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getNameItemSell() {
+        return nameItemSell;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setNameItemSell(String nameItemSell) {
+        this.nameItemSell = nameItemSell;
     }
 
-    public String getAvatarItem() {
-        return avatarItem;
+    public List<String> getAvatarItemSell() {
+        return avatarItemSell;
     }
 
-    public void setAvatarItem(String avatarItem) {
-        this.avatarItem = avatarItem;
+    public void setAvatarItemSell(List<String> avatarItemSell) {
+        this.avatarItemSell = avatarItemSell;
     }
 
     public String getCharacteristics() {
@@ -137,12 +143,12 @@ public class ItemSell {
         this.characteristics = characteristics;
     }
 
-    public String getCodeEventID() {
-        return codeEventID;
+    public String getEventCode() {
+        return EventCode;
     }
 
-    public void setCodeEventID(String codeEventID) {
-        this.codeEventID = codeEventID;
+    public void setEventCode(String eventCode) {
+        EventCode = eventCode;
     }
 
     public String getSale() {
@@ -151,5 +157,13 @@ public class ItemSell {
 
     public void setSale(String sale) {
         this.sale = sale;
+    }
+
+    public String getDaySell() {
+        return DaySell;
+    }
+
+    public void setDaySell(String daySell) {
+        DaySell = daySell;
     }
 }

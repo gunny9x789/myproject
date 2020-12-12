@@ -1,4 +1,4 @@
-package View.UserFragment.LoginRegisterFragment.RegisterFragment;
+package View.userFragment.LoginRegisterFragment.RegisterFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.myproject.R;
 import com.example.myproject.databinding.RegisterFragmentBinding;
 
-import View.UserFragment.LoginRegisterFragment.LoginFragment.LoginFragment;
+import View.userFragment.LoginRegisterFragment.LoginFragment.LoginFragment;
 
 public class RegisterFragment extends Fragment {
     RegisterFragmentBinding registerFragmentBinding;

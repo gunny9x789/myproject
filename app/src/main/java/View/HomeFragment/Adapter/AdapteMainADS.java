@@ -1,4 +1,4 @@
-package View.HomeFragment.Adapter;
+package View.homeFragment.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

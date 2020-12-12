@@ -1,12 +1,15 @@
 package com.example.myproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -15,23 +18,24 @@ import com.example.myproject.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import AllListForder.AllItemSellList;
-import AllListForder.AllListUseFromHome;
+import AllListForder.CheckLogin;
+import AllListForder.Object.InfoLogin;
 import AllListForder.Object.ItemSell;
-import View.CategoryFragment.CategoryFragment;
-import View.HomeFragment.HomeFragment;
-import View.NewsFeedFragment.NewsFeedFragment;
-import View.NotificationFragment.NotificationFragment;
-import View.UserFragment.UserFragment;
+import View.categoryFragment.CategoryFragment;
+import View.homeFragment.HomeFragment;
+import View.newsFeedFragment.NewsFeedFragment;
+import View.notificationFragment.NotificationFragment;
+import View.userFragment.UserFragment;
 
-public class MainActivity extends AppCompatActivity implements AllItemSellList{
-    ActivityMainBinding mainBinding;
-
+public class MainActivity extends AppCompatActivity implements AllItemSellList, CheckLogin {
+    private ActivityMainBinding mainBinding;
+    private ItemSell itemSell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        ItemSell itemSell= ALL_ITEM_SELL_LIST.get(27);
+        INFO_LOGIN_LIST.add(new InfoLogin(0,0,false));
         getFragment(HomeFragment.newInstance());
         Intent getIntend = getIntent();
         Boolean checkInternet = getIntend.getBooleanExtra("CheckInternet", true);
@@ -76,8 +80,26 @@ public class MainActivity extends AppCompatActivity implements AllItemSellList{
 
     }
 
+    public ItemSell getItemSell() {
+        return itemSell;
+    }
+
+    public void setItemSell(ItemSell itemSell) {
+        this.itemSell = itemSell;
+    }
+
+    public EditText getEt(){
+        return mainBinding.etSearchItemInMain;
+    }
     public void getFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, fragment).commit();
+    }
+    public  void setVisibleSearchBar(boolean visibleSearchBar){
+        if (visibleSearchBar){
+            mainBinding.mainSearchBar.setVisibility(View.VISIBLE);
+        }else {
+            mainBinding.mainSearchBar.setVisibility(View.GONE);
+        }
     }
 
 }

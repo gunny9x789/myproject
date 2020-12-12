@@ -1,9 +1,10 @@
-package View.HomeFragment.Adapter;
+package View.homeFragment.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,12 @@ public class AdaperRCVItemShowInHome extends RecyclerView.Adapter<AdaperRCVItemS
         this.itemSellList = itemSellList;
         notifyDataSetChanged();
     }
+    private OnItemRCVClickListener onItemRCVClickListener;
+
+    public void setItemClickListener(OnItemRCVClickListener onItemRCVClickListener) {
+        this.onItemRCVClickListener = onItemRCVClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,12 +48,19 @@ public class AdaperRCVItemShowInHome extends RecyclerView.Adapter<AdaperRCVItemS
         syms.setGroupingSeparator(',');
         DecimalFormat myFormatter = new DecimalFormat("###,###,###,###,###,###", syms);
 
-        Picasso.get().load(itemSell.getAvatarItem())
+        List<String> UrlImgList = itemSell.getAvatarItemSell();
+        Picasso.get().load(UrlImgList.get(0))
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgAvatar);
         holder.salePrice.setText(myFormatter.format(itemSell.getPriceSale())+" đ");
         holder.salePercent.setText("-"+itemSell.getSalePercent()+"%");
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemRCVClickListener.onItemClick(itemSell);
+            }
+        });
     }
 
     @Override
@@ -60,8 +74,10 @@ public class AdaperRCVItemShowInHome extends RecyclerView.Adapter<AdaperRCVItemS
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAvatar;
         TextView salePrice,salePercent;
+        LinearLayout linearLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            linearLayout = itemView.findViewById(R.id.layout_item_show_in_home);
             imgAvatar = itemView.findViewById(R.id.img_item_show_in_home);
             salePercent = itemView.findViewById(R.id.tv_sale_percen_item_show_in_home);
             salePrice = itemView.findViewById(R.id.tv_price_item_show_in_home);

@@ -41,15 +41,14 @@ public class Classify_item_list implements AllItemSellList, AllListUseFromHome, 
 
     public static void getItemYourMayLike() {
         if (INFO_LOGIN_LIST == null || INFO_LOGIN_LIST.isEmpty()) {
-            InfoLogin infoLogin = new InfoLogin(0, 0, "Logout");
             ITEM_YOUR_MAY_LIKE_LIST.clear();
             ITEM_YOUR_MAY_LIKE_LIST.addAll(ALL_ITEM_SELL_LIST);
         } else {
             InfoLogin infoLogin = INFO_LOGIN_LIST.get(INFO_LOGIN_LIST.size() - 1);
-            if (infoLogin.getInfoLogin().equals("Logout")) {
+            if (infoLogin.getInfoLogin() == false) {
                 ITEM_YOUR_MAY_LIKE_LIST.clear();
                 ITEM_YOUR_MAY_LIKE_LIST.addAll(ALL_ITEM_SELL_LIST);
-            } else if (infoLogin.getInfoLogin().equals("Login")) {
+            } else if (infoLogin.getInfoLogin()) {
                 int idUser = infoLogin.getIdUserLogin();
                 User user;
                 for (int i = 0; i < USER_LIST.size(); i++) {
@@ -71,7 +70,7 @@ public class Classify_item_list implements AllItemSellList, AllListUseFromHome, 
         }
         for (int i = 0; i < ALL_ITEM_SELL_LIST.size(); i++) {
             ItemSell itemSell = ALL_ITEM_SELL_LIST.get(i);
-            String eventCode = itemSell.getCodeEventID();
+            String eventCode = itemSell.getEventCode();
             if (eventCode.indexOf("HOT_DEAL")!=-1){
                 ITEM_HOT_DEAL.add(itemSell);
             }
@@ -83,7 +82,7 @@ public class Classify_item_list implements AllItemSellList, AllListUseFromHome, 
         }
         for (int i = 0; i < ALL_ITEM_SELL_LIST.size(); i++) {
             ItemSell itemSell = ALL_ITEM_SELL_LIST.get(i);
-            String eventCode = itemSell.getCodeEventID();
+            String eventCode = itemSell.getEventCode();
             if (eventCode.indexOf("BEST_PRICE")!=-1){
                 ITEM_BEST_PRICE.add(itemSell);
             }
@@ -95,7 +94,7 @@ public class Classify_item_list implements AllItemSellList, AllListUseFromHome, 
         }
         for (int i = 0; i < ALL_ITEM_SELL_LIST.size(); i++) {
             ItemSell itemSell = ALL_ITEM_SELL_LIST.get(i);
-            String eventCode = itemSell.getCodeEventID();
+            String eventCode = itemSell.getEventCode();
             if (eventCode.indexOf("NEW_ITEM")!=-1){
                 ITEM_NEW.add(itemSell);
             }

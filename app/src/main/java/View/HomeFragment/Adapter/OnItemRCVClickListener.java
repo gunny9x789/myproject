@@ -1,5 +1,7 @@
-package View.HomeFragment.Adapter;
+package View.homeFragment.adapter;
+
+import AllListForder.Object.ItemSell;
 
 public interface OnItemRCVClickListener {
-    void onItemClick(int position);
+    void onItemClick(ItemSell itemSell);
 }

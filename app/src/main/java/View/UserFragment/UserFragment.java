@@ -1,4 +1,4 @@
-package View.UserFragment;
+package View.userFragment;
 
 import android.content.Intent;
 import android.os.Bundle;

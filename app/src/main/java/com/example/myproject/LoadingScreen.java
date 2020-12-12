@@ -9,13 +9,17 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 import AllListForder.MainCategoryList;
 import AllListForder.Object.MainCategory;
@@ -45,8 +49,8 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
             new GetData().execute();
         } else {
             //network disable
-            AlertDialog checkInternetAnalog = new AlertDialog.Builder(getBaseContext())
-                    .setTitle("Thông báo")
+            AlertDialog checkInternetAnalog = new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialogTile))
                     .setMessage(getString(R.string.notifyCheckInternet))
                     .setPositiveButton(getString(R.string.returnConnect), new DialogInterface.OnClickListener() {
                         @Override
@@ -150,6 +154,7 @@ public class LoadingScreen extends AppCompatActivity implements MainCategoryList
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return json;
     }
 }

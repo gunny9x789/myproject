@@ -4,12 +4,12 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1BA9FF">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1BA9FF"
+            android:background="@color/TextLogReg"
             android:orientation="vertical">
 
             <RelativeLayout

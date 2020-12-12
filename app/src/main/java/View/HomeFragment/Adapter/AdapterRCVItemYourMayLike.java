@@ -1,10 +1,10 @@
-package View.HomeFragment.Adapter;
+package View.homeFragment.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +26,11 @@ public class AdapterRCVItemYourMayLike extends RecyclerView.Adapter<AdapterRCVIt
         this.itemSellList = itemSellList;
         notifyDataSetChanged();
     }
+    private OnItemRCVClickListener onItemRCVClickListener;
+
+    public void setItemClickListener(OnItemRCVClickListener onItemRCVClickListener) {
+        this.onItemRCVClickListener = onItemRCVClickListener;
+    }
 
     @NonNull
     @Override
@@ -43,7 +48,8 @@ public class AdapterRCVItemYourMayLike extends RecyclerView.Adapter<AdapterRCVIt
         syms.setGroupingSeparator(',');
         DecimalFormat myFormatter = new DecimalFormat("###,###,###,###,###,###", syms);
 
-        Picasso.get().load(itemSell.getAvatarItem())
+        List<String> UrlImgList = itemSell.getAvatarItemSell();
+        Picasso.get().load(UrlImgList.get(0))
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imageView);
@@ -54,6 +60,12 @@ public class AdapterRCVItemYourMayLike extends RecyclerView.Adapter<AdapterRCVIt
         } else if (itemSell.getSale().equals("no")) {
             holder.salePercent.setVisibility(View.GONE);
         }
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemRCVClickListener.onItemClick(itemSell);
+            }
+        });
     }
 
     @Override
@@ -67,9 +79,10 @@ public class AdapterRCVItemYourMayLike extends RecyclerView.Adapter<AdapterRCVIt
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView salePercent, priceItem;
-
+        LinearLayout linearLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            linearLayout =itemView.findViewById(R.id.layout_item_your_may_like);
             imageView = itemView.findViewById(R.id.img_item_may_like);
             salePercent = itemView.findViewById(R.id.tv_sale_percen_in_may_like);
             priceItem = itemView.findViewById(R.id.tv_price_item_may_like);

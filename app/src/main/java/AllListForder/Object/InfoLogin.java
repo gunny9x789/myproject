@@ -2,9 +2,9 @@ package AllListForder.Object;
 
 public class InfoLogin {
     private int idCheck, idUserLogin;
-    private String infoLogin;
+    private Boolean infoLogin;
 
-    public InfoLogin(int idCheck, int idUserLogin, String infoLogin) {
+    public InfoLogin(int idCheck, int idUserLogin, Boolean infoLogin) {
         this.idCheck = idCheck;
         this.idUserLogin = idUserLogin;
         this.infoLogin = infoLogin;
@@ -26,11 +26,11 @@ public class InfoLogin {
         this.idUserLogin = idUserLogin;
     }
 
-    public String getInfoLogin() {
+    public Boolean getInfoLogin() {
         return infoLogin;
     }
 
-    public void setInfoLogin(String infoLogin) {
+    public void setInfoLogin(Boolean infoLogin) {
         this.infoLogin = infoLogin;
     }
 }

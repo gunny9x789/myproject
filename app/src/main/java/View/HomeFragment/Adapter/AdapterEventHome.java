@@ -1,4 +1,4 @@
-package View.HomeFragment.Adapter;
+package View.homeFragment.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -38,23 +38,23 @@ public class AdapterEventHome extends RecyclerView.Adapter<AdapterEventHome.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final EventInHome eventInHome = eventInHomeList.get(position);
 
-        Picasso.get().load(eventInHome.getURL_Main_Event_Img())
+        Picasso.get().load(eventInHome.getUrlMainEventImg())
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgMainEvent);
-        Picasso.get().load(eventInHome.getURL_Side_Event_Img_1())
+        Picasso.get().load(eventInHome.getUrlSideEventImg1())
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgSideEvent1);
-        Picasso.get().load(eventInHome.getURL_Side_Event_Img_2())
+        Picasso.get().load(eventInHome.getUrlSideEventImg2())
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgSideEvent2);
-        Picasso.get().load(eventInHome.getURL_Side_Event_Img_3())
+        Picasso.get().load(eventInHome.getUrlSideEventImg3())
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgSideEvent3);
-        Picasso.get().load(eventInHome.getURL_Side_Event_Img_4())
+        Picasso.get().load(eventInHome.getUrlSideEventImg4())
                 .placeholder(R.drawable.dont_loading_img)
                 .error(R.drawable.dont_loading_img)
                 .into(holder.imgSideEvent4);

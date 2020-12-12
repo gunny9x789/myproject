@@ -17,6 +17,7 @@
     <color name="All_category">#0040FF</color>
     <color name="background_item_main_category">#eef9ff</color>
     <color name="TextLogReg">#1ba9ff</color>
+    <color name="ColorTextInDetail">#585858</color>
 
 
     <color name="function_select">#0f1bc2</color>

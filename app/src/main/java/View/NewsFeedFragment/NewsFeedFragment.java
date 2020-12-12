@@ -1,4 +1,4 @@
-package View.NewsFeedFragment;
+package View.newsFeedFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

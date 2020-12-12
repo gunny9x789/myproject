@@ -24,13 +24,15 @@
                 android:layout_weight="10">
 
                 <EditText
-                    android:layout_marginLeft="@dimen/_6sdp"
                     android:id="@+id/et_search_item_inMain"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_6sdp"
                     android:background="@drawable/seach_bar"
                     android:hint="@string/et_search_bar"
-                    android:paddingLeft="@dimen/_10sdp" />
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_30sdp"
+                    />
 
                 <ImageView
                     android:layout_width="@dimen/_28sdp"
@@ -41,10 +43,10 @@
             </RelativeLayout>
 
             <ImageView
-                android:layout_gravity="center_vertical"
                 android:id="@+id/img_icon_buy_inMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_shopping_cart_24" />
         </LinearLayout>

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.example.myproject.databinding.ActivityLoginBinding;
 
-import View.UserFragment.LoginRegisterFragment.LoginFragment.LoginFragment;
+import View.userFragment.LoginRegisterFragment.LoginFragment.LoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding loginBinding;

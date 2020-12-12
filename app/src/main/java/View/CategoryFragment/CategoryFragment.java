@@ -1,6 +1,8 @@
-package View.CategoryFragment;
+package View.categoryFragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,32 +11,96 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myproject.R;
 import com.example.myproject.databinding.CategoryFragmentBinding;
 
-public class CategoryFragment extends Fragment {
-    CategoryFragmentBinding categoryFragmentBinding;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-    public static CategoryFragment newInstance(){
+import AllListForder.MainCategoryList;
+import View.categoryFragment.Adapter.AdsCategoriAdapter;
+import View.categoryFragment.Adapter.MainCategoryRCVAdapter;
+
+public class CategoryFragment extends Fragment implements MainCategoryList {
+
+    CategoryFragmentBinding categoryFragmentBinding;
+    private List<Integer> listItemAdsCategory;
+    private AdsCategoriAdapter adsCategoriAdapter;
+    private MainCategoryRCVAdapter mainCategoryRCVAdapter;
+    private Timer timer;
+
+    public static CategoryFragment newInstance() {
+
         Bundle args = new Bundle();
-        CategoryFragment categoryFragment = new CategoryFragment();
-        categoryFragment.setArguments(args);
-        return categoryFragment;
+
+        CategoryFragment fragment = new CategoryFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        categoryFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.category_fragment,container,false);
-        getFragment(ShowListCategoryFragment.newInstance());
+        categoryFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.category_fragment, container, false);
+        listItemAdsCategory = new ArrayList<>();
+        listItemAdsCategory.add(R.drawable.ads_in_category_1);
+        listItemAdsCategory.add(R.drawable.ads_in_category_2);
+        listItemAdsCategory.add(R.drawable.ads_in_category_3);
+
+
+        mainCategoryRCVAdapter = new MainCategoryRCVAdapter(MAIN_CATEGORY_LIST);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        categoryFragmentBinding.rcvMainCategory.setLayoutManager(layoutManager);
+        categoryFragmentBinding.rcvMainCategory.setAdapter(mainCategoryRCVAdapter);
+
+        adsCategoriAdapter = new AdsCategoriAdapter(listItemAdsCategory, getActivity().getBaseContext());
+        categoryFragmentBinding.pagerAdsSideCategory.setAdapter(adsCategoriAdapter);
+        categoryFragmentBinding.CIAdsSideCategory.setViewPager(categoryFragmentBinding.pagerAdsSideCategory);
+        adsCategoriAdapter.registerDataSetObserver(categoryFragmentBinding.CIAdsSideCategory.getDataSetObserver());
+
+        autoSlide();
 
         return categoryFragmentBinding.getRoot();
     }
 
-    public void getFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.show_list_category_fragment, fragment).commit();
+    private void autoSlide() {
+        if (listItemAdsCategory == null || listItemAdsCategory.isEmpty() || categoryFragmentBinding.pagerAdsSideCategory == null) {
+            return;
+        }
+        if (timer == null) {
+            timer = new Timer();
+        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = categoryFragmentBinding.pagerAdsSideCategory.getCurrentItem();
+                        int totalItem = listItemAdsCategory.size() - 1;
+                        if (currentItem < totalItem){
+                            currentItem++;
+                            categoryFragmentBinding.pagerAdsSideCategory.setCurrentItem(currentItem);
+                        }else {
+                            categoryFragmentBinding.pagerAdsSideCategory.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        }, 500, 3000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 }
