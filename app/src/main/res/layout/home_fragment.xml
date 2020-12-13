@@ -165,7 +165,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="@string/NewItem"
+                        android:text="@string/NewItemHome"
                         android:textSize="18sp" />
                     <TextView
                         android:id="@+id/tv_best_price_in_home"

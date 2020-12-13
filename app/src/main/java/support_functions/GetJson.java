@@ -60,7 +60,7 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
                 String nameItemSell = jsonObject.getString("nameItemSell");
                 List<String> avatarItemSellList = new ArrayList<>();
                 JSONArray avatarItemSell = jsonObject.getJSONArray("avatarItemSell");
-                for (int j = 0; j<avatarItemSell.length();j++){
+                for (int j = 0; j < avatarItemSell.length(); j++) {
                     JSONObject jsonObject1 = avatarItemSell.getJSONObject(j);
                     String UrlImg = jsonObject1.getString("UrlImg");
                     avatarItemSellList.add(UrlImg);
@@ -73,11 +73,12 @@ public class GetJson implements AllListUseFromHome, AllItemSellList {
                 int totalItemSold = jsonObject.getInt("totalItemSold");
                 int itemSoldInMonth = jsonObject.getInt("itemSoldInMonth");
                 int idUserSell = jsonObject.getInt("idUserSell");
+                String trademark = jsonObject.getString("trademark");
                 String characteristics = jsonObject.getString("characteristics");
                 String EventCode = jsonObject.getString("EventCode");
                 String daySell = jsonObject.getString("DaySell");
-                ALL_ITEM_SELL_LIST.add(new ItemSell(idItemSell, CodeMainCateId, CodeSideCateId, nameItemSell, idUserSell, avatarItemSellList,
-                        sale, salePercent, priceDontSale, priceSale, totalItem, totalItemSold,itemSoldInMonth, characteristics, EventCode,daySell));
+                ALL_ITEM_SELL_LIST.add(new ItemSell(idItemSell, CodeMainCateId, CodeSideCateId, nameItemSell, idUserSell, trademark, avatarItemSellList,
+                        sale, salePercent, priceDontSale, priceSale, totalItem, totalItemSold, itemSoldInMonth, characteristics, EventCode, daySell));
 
             }
         } catch (Exception e) {

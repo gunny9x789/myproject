@@ -21,13 +21,14 @@ import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
+import AllListForder.AllItemSellList;
 import AllListForder.MainCategoryList;
 import AllListForder.Object.MainCategory;
 import support_functions.CheckInternet;
 import support_functions.Classify_item_list;
 import support_functions.GetJson;
 
-public class LoadingScreen extends AppCompatActivity implements MainCategoryList {
+public class LoadingScreen extends AppCompatActivity implements MainCategoryList, AllItemSellList {
     private int Request_Permission_Code = 10;
     private String URL_LINK_ADS_HOME = "https://demo8357538.mockable.io/DemoHomeAds";
     private String URL_LINK_HOME_EVENT = "https://demo8357538.mockable.io/demoHomeEvent";

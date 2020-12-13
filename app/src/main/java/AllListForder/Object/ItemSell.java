@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ItemSell implements Serializable {
     private int idItemSell, priceDontSale, priceSale, salePercent, totalItem, totalItemSold, itemSoldInMonth, idUserSell;
-    private String CodeMainCateId, CodeSideCateId, nameItemSell, trademark,characteristics, EventCode, sale, DaySell;
+    private String CodeMainCateId, CodeSideCateId, nameItemSell, trademark, characteristics, EventCode, sale, DaySell;
     private List<String> avatarItemSell;
 
     public ItemSell(int idItemSell, String CodeMainCateId, String CodeSideCateId, String nameItemSell, int idUserSell,
